@@ -25,28 +25,8 @@ if (ent instanceof TNTPrimed && (ent.getLocation().getBlock().getRelative(BlockF
 	int amt = random.nextInt(32);
 	ItemStack i = new ItemStack(349);
 	i.setAmount(amt);
-	w.dropItem(event.getEntity().getLocation(), i);
+	w.dropItemNaturally(event.getEntity().getLocation(), i);
 }
-
-
-
-
-
-
-
-
 	}
 	// End of the onEntityExplode method.
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
