@@ -2,6 +2,8 @@ package me.menexia.dynafish;
 
 import java.util.Random;
 
+import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.TNTPrimed;
@@ -17,6 +19,26 @@ public class DFEntityListener extends EntityListener {
 	// End of public DFBlockListener method
 	
 	public void onEntityExplode(EntityExplodeEvent event) {
+		if (event.isCancelled()) return;
+Entity ent = event.getEntity();
+if (ent instanceof TNTPrimed && (ent.getLocation().getBlock().getRelative(org.bukkit.block.BlockFace.UP).isLiquid())) {
+Location loc = ent.getLocation();
+World w = loc.getWorld();
+	
+event.setCancelled(true);
+w.createExplosion(loc, 0.0F, false);
+w.playEffect(loc, Effect.SMOKE, 1);
+
+	/*double x = ent.getLocation().getX();
+	double y = ent.getLocation().getY();
+	double z = ent.getLocation().getZ();*/
+	
+}
+	}
+	// NEW EXPLODE METHOD.
+	
+	
+	/*public void onEntityExplode(EntityExplodeEvent event) {
 Entity ent = event.getEntity();
 if (ent instanceof TNTPrimed && (ent.getLocation().getBlock().getRelative(org.bukkit.block.BlockFace.UP).isLiquid())) {
 	World w = event.getLocation().getWorld();
@@ -26,6 +48,6 @@ if (ent instanceof TNTPrimed && (ent.getLocation().getBlock().getRelative(org.bu
 	i.setAmount(amt);
 	w.dropItemNaturally(event.getEntity().getLocation(), i);
 }
-	}
+	}*/
 	// End of the onEntityExplode method.
 }
