@@ -32,7 +32,8 @@ public void onDisable() {
 @Override
 public void onEnable() {
 PluginManager pm = this.getServer().getPluginManager();
-pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Normal, this);
+pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Monitor, this);
+pm.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Monitor, this);
 PluginDescriptionFile pdf = this.getDescription();
 this.logger.info( pdf.getName() + " version " + pdf.getVersion() + " is enabled!" );
 }
