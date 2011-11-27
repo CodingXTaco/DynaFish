@@ -6,7 +6,10 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.TNTPrimed;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.inventory.ItemStack;
@@ -50,4 +53,17 @@ if (ent instanceof TNTPrimed && (ent.getLocation().getBlock().getRelative(org.bu
 }
 	}*/
 	// End of the onEntityExplode method.
+	
+	public void onEntityDamage(EntityDamageEvent event) {
+		if (event.isCancelled()) return;
+	if (event instanceof EntityDamageByEntityEvent) {
+		EntityDamageByEntityEvent ebdeEvent = (EntityDamageByEntityEvent)event;
+		Entity damager = ebdeEvent.getDamager();
+		Entity damagee = event.getEntity();
+		if (damager instanceof TNTPrimed && damagee instanceof Item) {
+			event.setCancelled(true);
+		}
+	}
+	}
+	
 }
