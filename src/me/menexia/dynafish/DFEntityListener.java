@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityListener;
+import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class DFEntityListener extends EntityListener {
@@ -21,16 +22,24 @@ public class DFEntityListener extends EntityListener {
 	}
 	// End of public DFBlockListener method
 	
-	public void onEntityExplode(EntityExplodeEvent event) {
+	public void onExplosionPrime(ExplosionPrimeEvent event) {
 		if (event.isCancelled()) return;
 Entity ent = event.getEntity();
 if (ent instanceof TNTPrimed && (ent.getLocation().getBlock().getRelative(org.bukkit.block.BlockFace.UP).isLiquid())) {
 Location loc = ent.getLocation();
 World w = loc.getWorld();
-	
-event.setCancelled(true);
+/*event.setCancelled(true);
 w.createExplosion(loc, 0.0F, false);
-w.playEffect(loc, Effect.SMOKE, 1);
+w.playEffect(loc, Effect.SMOKE, 1);*/
+Random random = new Random();
+int x = ent.getLocation().getBlockX();
+int y = ent.getLocation().getBlockY();
+int z = ent.getLocation().getBlockZ();
+int amt = random.nextInt(32);
+ItemStack i = new ItemStack(349);
+i.setAmount(amt);
+w.dropItemNaturally(new Location(w, x, y, z), i);
+//(random.nextInt(5) - 2, 0, random.nextInt(5) - 2);
 
 	/*double x = ent.getLocation().getX();
 	double y = ent.getLocation().getY();
@@ -54,16 +63,20 @@ if (ent instanceof TNTPrimed && (ent.getLocation().getBlock().getRelative(org.bu
 	}*/
 	// End of the onEntityExplode method.
 	
-	public void onEntityDamage(EntityDamageEvent event) {
-		if (event.isCancelled()) return;
-	if (event instanceof EntityDamageByEntityEvent) {
-		EntityDamageByEntityEvent ebdeEvent = (EntityDamageByEntityEvent)event;
-		Entity damager = ebdeEvent.getDamager();
-		Entity damagee = event.getEntity();
-		if (damager instanceof TNTPrimed && damagee instanceof Item) {
+public void onEntityDamage(EntityDamageEvent event) 
+{ if (event.isCancelled()) return;
+	if (event instanceof EntityDamageByEntityEvent)
+	{
+	EntityDamageByEntityEvent ebdeEvent = (EntityDamageByEntityEvent)event;
+	Entity damager = ebdeEvent.getDamager();
+	Entity damagee = event.getEntity();
+		if (damager instanceof TNTPrimed && damagee instanceof Item) 
+		{
 			event.setCancelled(true);
 		}
 	}
-	}
+}
+	// End of onEntityDamage method
+	
 	
 }
