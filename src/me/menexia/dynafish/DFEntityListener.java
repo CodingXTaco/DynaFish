@@ -2,10 +2,8 @@ package me.menexia.dynafish;
 
 import java.util.Random;
 
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.TNTPrimed;
@@ -23,7 +21,7 @@ public class DFEntityListener extends EntityListener {
 	}
 	// End of public DFBlockListener method
 	
-	public void onExplosionPrime(ExplosionPrimeEvent event) {
+	public void onEntityExplode(EntityExplodeEvent event) {
 		if (event.isCancelled()) return;
 Entity ent = event.getEntity();
 if (ent instanceof TNTPrimed && (ent.getLocation().getBlock().getRelative(org.bukkit.block.BlockFace.UP).isLiquid())) {
@@ -31,24 +29,21 @@ if (ent instanceof TNTPrimed && (ent.getLocation().getBlock().getRelative(org.bu
 	int chance = value.nextInt(10);
 	if (chance < 1) {} else {
 Location loc = ent.getLocation();
-World w = loc.getWorld();
+World wo = loc.getWorld();
 /*event.setCancelled(true);
 w.createExplosion(loc, 0.0F, false);
 w.playEffect(loc, Effect.SMOKE, 1);*/
 //(random.nextInt(5) - 2, 0, random.nextInt(5) - 2)
 //getRelative(random.nextInt(5) - 2, 0, random.nextInt(5)- 2);
 Random random = new Random();
-int x = ent.getLocation().getBlock().getRelative(random.nextInt(6) - 3, 0, random.nextInt(6)- 3).getX();
-int y = ent.getLocation().getBlockY();
-int z = ent.getLocation().getBlock().getRelative(random.nextInt(6) - 3, 0, random.nextInt(6)- 3).getZ();
-int amt = random.nextInt(2);
-ItemStack i = new ItemStack(349);
-i.setAmount(amt);
-for (int i1=0; i1<16; i1++) {
-	w.dropItemNaturally(new Location(w, x, y++, z), i);
-}
-for (int a1=0; a1<16; a1++) {
-	w.dropItemNaturally(new Location(w, z, y++, x), i);
+double x = loc.getX() + random.nextInt(5) - 2;
+double y = loc.getY() + 1;
+double z = loc.getZ() + random.nextInt(5) - 2;
+// loc.add(xcoord, ycoord, zcoord);
+for (int a=0; a<33; a++) {
+	int p = random.nextInt(2);
+	if (p < 1) continue;
+	wo.dropItemNaturally(new Location(wo, x, y, z), new ItemStack(349, 1));
 }
 //(random.nextInt(5) - 2, 0, random.nextInt(5) - 2);
 
@@ -56,9 +51,9 @@ for (int a1=0; a1<16; a1++) {
 	double y = ent.getLocation().getY();
 	double z = ent.getLocation().getZ();*/
 	
+} // end of else statement
 }
-}
-// end of else statement
+
 	}
 	// NEW EXPLODE METHOD.
 	
@@ -76,7 +71,7 @@ if (ent instanceof TNTPrimed && (ent.getLocation().getBlock().getRelative(org.bu
 	}*/
 	// End of the onEntityExplode method.
 	
-public void onEntityDamage(EntityDamageEvent event) 
+/*public void onEntityDamage(EntityDamageEvent event) 
 { if (event.isCancelled()) return;
 	if (event instanceof EntityDamageByEntityEvent)
 	{
@@ -88,7 +83,7 @@ public void onEntityDamage(EntityDamageEvent event)
 			event.setCancelled(true);
 		}
 	}
-}
+}*/
 	// End of onEntityDamage method
 	
 	
