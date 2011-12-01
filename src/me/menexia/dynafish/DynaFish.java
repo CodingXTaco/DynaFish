@@ -1,10 +1,10 @@
 package me.menexia.dynafish;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 
-import org.bukkit.block.Block;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,11 +18,8 @@ public class DynaFish extends JavaPlugin {
 	
 	public final Logger logger = Logger.getLogger("Minecraft");
 	private final DFEntityListener entityListener = new DFEntityListener(this);
-	//Defined entity listener
-	public final HashMap<Player, ArrayList<Block>> DFUsers = new HashMap();
-	//Creating the HashMap
-	private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
-	//Create HashMap Debugee
+	public Set<Player> user = new HashSet<Player>();
+	// HashSet is a command tracker.
 
 @Override
 public void onDisable() {
@@ -32,50 +29,37 @@ public void onDisable() {
 @Override
 public void onEnable() {
 PluginManager pm = this.getServer().getPluginManager();
-pm.registerEvent(Event.Type.EXPLOSION_PRIME, this.entityListener, Event.Priority.Monitor, this);
 pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Monitor, this);
 pm.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Monitor, this);
 PluginDescriptionFile pdf = this.getDescription();
 this.logger.info( pdf.getName() + " version " + pdf.getVersion() + " by MeneXia is enabled!" );
 }
-// End of onEnable method.
 
-public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if (commandLabel.equalsIgnoreCase("dynafish")
-			|| commandLabel.equalsIgnoreCase("df"))
-		{
-		toggleVision((Player) sender);
-		}
-	return true;
-		}
-// End of onCommand method.
+public boolean hasUser(Player player) {
+	return user.contains(player);
+}
 
-public boolean isDebugging(final Player player) {
-	if (debugees.containsKey(player)) {
-		return debugees.get(player);
+public void setUser(Player player, boolean enabled) {
+	if (enabled) {
+		user.add(player);
+		player.sendMessage(ChatColor.RED + "[DynaFish]" + ChatColor.WHITE + " enabled.");
 	} else {
-		return false;
+		user.remove(player);
+		player.sendMessage(ChatColor.RED + "[DynaFish]" + ChatColor.WHITE + " disabled.");
 	}
 }
-// End of debugging method.
 
-public void setDebuging(final Player player, final boolean value) {
-	debugees.put(player, value);
-}
-// The method enabled which checks to see if the player is in the hashmap.
-public boolean enabled(Player player) {
-	return this.DFUsers.containsKey(player);
-	}
-	// Check if it has player within key.
-	
-	public void toggleVision(Player player) {
-		if (enabled(player)) {
-			this.DFUsers.remove(player);
-			player.sendMessage("DynaFish disabled!");
-		} else {
-			this.DFUsers.put(player, null);
-			player.sendMessage("DynaFish enabled!");
+public boolean onCommand(CommandSender sender, Command cmd, String zhf, String[] args) {
+		if (!(sender instanceof Player)) {
+			return false;
+			}
+			if (zhf.equalsIgnoreCase("dynafish") || zhf.equalsIgnoreCase("df")) {
+				if (sender instanceof Player) {
+				Player player = (Player)sender;
+				setUser(player, !hasUser(player));
+				}
+			}
+		return true;
 		}
-	}
-	// End of toggleVision method	
+
 }
