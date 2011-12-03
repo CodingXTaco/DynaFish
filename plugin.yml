@@ -1,6 +1,6 @@
 name: DynaFish
 main: me.menexia.dynafish.DynaFish
-version: 1.2
+version: 1.3
 description: Dynamite Fishing!
 commands:
     dynafish:
@@ -9,3 +9,7 @@ commands:
     df:
         description: Also enables or disables dynamite fishing.
         usage: df
+permissions:
+    dynafish.use:
+        description: Makes you able to fish using dynamite.
+        default: false
