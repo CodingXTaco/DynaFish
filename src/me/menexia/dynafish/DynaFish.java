@@ -53,12 +53,15 @@ public boolean onCommand(CommandSender sender, Command cmd, String zhf, String[]
 		if (!(sender instanceof Player)) {
 			return false;
 			}
+		if(sender.hasPermission("dynafish.use")) {
 			if (zhf.equalsIgnoreCase("dynafish") || zhf.equalsIgnoreCase("df")) {
 				if (sender instanceof Player) {
 				Player player = (Player)sender;
 				setUser(player, !hasUser(player));
+					}
 				}
 			}
 		return true;
 		}
+
 }
