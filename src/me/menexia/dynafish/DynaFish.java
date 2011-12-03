@@ -34,6 +34,7 @@ pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.
 pm.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Monitor, this);
 PluginDescriptionFile pdf = this.getDescription();
 this.logger.info( pdf.getName() + " version " + pdf.getVersion() + " by MeneXia is enabled!" );
+this.logger.info("[DynaFish] Permissions will default to op if SuperPerms is not present.");
 }
 
 public boolean hasUser(Player player) {
@@ -53,7 +54,7 @@ public void setUser(Player player, boolean enabled) {
 public boolean onCommand(CommandSender sender, Command cmd, String zhf, String[] args) {
 		if (!(sender instanceof Player)) {
 			sender.sendMessage("You must be in-game to use DynaFish.");
-			return true;
+			return true; //return ends current code.
 			}
 		if(sender.hasPermission("dynafish.use")) {
 			if (zhf.equalsIgnoreCase("dynafish") || zhf.equalsIgnoreCase("df")) {
