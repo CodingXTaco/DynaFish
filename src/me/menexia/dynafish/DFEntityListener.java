@@ -37,8 +37,8 @@ for (int a=0; a<33; a++) {
 	shu.dropItemNaturally(new Location(shu, x, y, z), new ItemStack(349, 1));
 } // end of for loop
 } // end of else statement
-} // end of checks if in HashSet
 } // end of if TNTPrimed
-} 
+} // end of if player is in HashSet
+} // end of player for statement
 } // end of onEntityExplode method
 }
