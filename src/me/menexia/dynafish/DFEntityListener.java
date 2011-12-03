@@ -5,6 +5,7 @@ import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +17,9 @@ public class DFEntityListener extends EntityListener {
 	}
 	
 	public void onEntityExplode(EntityExplodeEvent event) {
-		if (event.isCancelled()) return;
+			if (event.isCancelled()) return;
+			for(Player pl: plugin.user) {
+				if (plugin.user.contains(pl)) {
 Entity ent = event.getEntity();
 if (ent instanceof org.bukkit.entity.TNTPrimed && (ent.getLocation().getBlock().getRelative(org.bukkit.block.BlockFace.UP).isLiquid())) {
 	Random value = new Random();
@@ -34,6 +37,8 @@ for (int a=0; a<33; a++) {
 	shu.dropItemNaturally(new Location(shu, x, y, z), new ItemStack(349, 1));
 } // end of for loop
 } // end of else statement
+} // end of checks if in HashSet
 } // end of if TNTPrimed
+} 
 } // end of onEntityExplode method
 }
