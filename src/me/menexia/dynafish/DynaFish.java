@@ -20,6 +20,7 @@ public class DynaFish extends JavaPlugin {
 	private final DFEntityListener entityListener = new DFEntityListener(this);
 	public Set<Player> user = new HashSet<Player>();
 	// HashSet is a command tracker.
+	ChatColor ese = ChatColor.RED;
 
 @Override
 public void onDisable() {
@@ -42,16 +43,17 @@ public boolean hasUser(Player player) {
 public void setUser(Player player, boolean enabled) {
 	if (enabled) {
 		user.add(player);
-		player.sendMessage(ChatColor.RED + "[DynaFish]" + ChatColor.WHITE + " enabled.");
+		player.sendMessage(ese + "[DynaFish]" + ChatColor.WHITE + " enabled.");
 	} else {
 		user.remove(player);
-		player.sendMessage(ChatColor.RED + "[DynaFish]" + ChatColor.WHITE + " disabled.");
+		player.sendMessage(ese + "[DynaFish]" + ChatColor.WHITE + " disabled.");
 	}
 }
 
 public boolean onCommand(CommandSender sender, Command cmd, String zhf, String[] args) {
 		if (!(sender instanceof Player)) {
-			return false;
+			sender.sendMessage("You must be in-game to use DynaFish.");
+			return true;
 			}
 		if(sender.hasPermission("dynafish.use")) {
 			if (zhf.equalsIgnoreCase("dynafish") || zhf.equalsIgnoreCase("df")) {
@@ -60,7 +62,9 @@ public boolean onCommand(CommandSender sender, Command cmd, String zhf, String[]
 				setUser(player, !hasUser(player));
 					}
 				}
-			}
+			} else {
+				sender.sendMessage(ese + "Sorry, no DynaFish for you!");
+				}
 		return true;
 		}
 
