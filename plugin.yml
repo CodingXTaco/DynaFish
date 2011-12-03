@@ -12,4 +12,4 @@ commands:
 permissions:
     dynafish.use:
         description: Makes you able to fish using dynamite.
-        default: false
+        default: op
