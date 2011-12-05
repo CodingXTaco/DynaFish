@@ -25,9 +25,9 @@ public class DynaFish extends JavaPlugin {
 	// HashSet is a command tracker.
 	ChatColor ese = ChatColor.RED;
 	
-	static int OVERALL_CHANCE = 0;
-	static int AMOUNT_TO_DROP = 0;
-	static int CHANCE_PER_DROP = 0;
+	static int OVERALL_CHANCE = 0; // chance of dropping nothing or something
+	static int AMOUNT_TO_DROP = 0; // total amount of fish to drop
+	static int CHANCE_PER_DROP = 0; // chance per drop of fish
 	// variables are mentioned for reference
 	
 @Override
