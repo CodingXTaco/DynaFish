@@ -26,26 +26,21 @@ if (ent instanceof org.bukkit.entity.TNTPrimed && (ent.getLocation().getBlock().
 	if (DynaFish.OVERALL_CHANCE > 0) {
 		Location sym = ent.getLocation();
 		World inull = sym.getWorld();
-		final int ersh = random.nextInt(DynaFish.OVERALL_CHANCE) + 1;
-		if (ersh == 1) {
+		final int ersh = random.nextInt(DynaFish.OVERALL_CHANCE);
+		if (ersh < 1) {
 			double x = sym.getX() + random.nextInt(5) - 2;
 			double y = sym.getY() + 1;
 			double z = sym.getZ() + random.nextInt(5) - 2;
 			for (int a=0; a<33; a++) {
-				int p = random.nextInt(DynaFish.CHANCE_PER_DROP) + 1;
-				// bah, math. chance per drop needs to be somewhat incremental.
-				// if user sets chance per drop as 2...
-				// TODO: NEED TO MAKE INTO PERCENTAGES.
-				if (p == 1) continue;
+				int p = random.nextInt(DynaFish.CHANCE_PER_DROP);
+				if (p < 1) continue;
 				inull.dropItemNaturally(new Location(inull, x, y, z), new ItemStack(349, 1));
+				return;
+			}
 		}
-
-	} else {
-
-} // end of for loop
-} // end of else statement
-} // end of if TNTPrimed
-} // end of if player is in HashSet
-} // end of player for statement
-} // end of onEntityExplode method
+	}
+}
+				}
+			}
+	}
 }
