@@ -1,5 +1,6 @@
 package me.menexia.dynafish;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -7,6 +8,7 @@ import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -18,10 +20,16 @@ public class DynaFish extends JavaPlugin {
 	
 	public final Logger logger = Logger.getLogger("Minecraft");
 	private final DFEntityListener entityListener = new DFEntityListener(this);
+	protected FileConfiguration config; 
 	public Set<Player> user = new HashSet<Player>();
 	// HashSet is a command tracker.
 	ChatColor ese = ChatColor.RED;
-
+	
+	static int OVERALL_CHANCE = 0;
+	static int AMOUNT_TO_DROP = 0;
+	static int CHANCE_PER_DROP = 0;
+	// variables are mentioned for reference
+	
 @Override
 public void onDisable() {
 	this.logger.info("DynaFish disabled!");
@@ -29,12 +37,24 @@ public void onDisable() {
 
 @Override
 public void onEnable() {
-PluginManager pm = this.getServer().getPluginManager();
-pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Monitor, this);
-pm.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Monitor, this);
-PluginDescriptionFile pdf = this.getDescription();
-this.logger.info( pdf.getName() + " version " + pdf.getVersion() + " by MeneXia is enabled!" );
-this.logger.info("[DynaFish] Permissions will default to op if SuperPerms is not present.");
+	try {
+		File fileconfig = new File(getDataFolder(), "config.yml");
+		if (!fileconfig.exists()) {
+			config = getConfig();
+			getDataFolder().mkdir();
+			new File(getDataFolder(), "config.yml");
+			config.options().copyDefaults(true);
+		}
+	} catch (Exception e1){
+		e1.printStackTrace();
+	}
+	emap_asym();
+	PluginManager pm = this.getServer().getPluginManager();
+	pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Monitor, this);
+	pm.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Monitor, this);
+	PluginDescriptionFile pdf = this.getDescription();
+	this.logger.info( "[" + pdf.getName() + "]" + " version " + pdf.getVersion() + " by MeneXia is enabled!" );
+	this.logger.info("[DynaFish] Permissions will default to op if SuperPerms is not present.");
 }
 
 public boolean hasUser(Player player) {
@@ -68,5 +88,12 @@ public boolean onCommand(CommandSender sender, Command cmd, String zhf, String[]
 				}
 		return true;
 		}
+
+public void emap_asym() {
+	OVERALL_CHANCE = config.getInt("OVERALL_CHANCE");
+	AMOUNT_TO_DROP = config.getInt("AMOUNT_TO_DROP");
+	CHANCE_PER_DROP = config.getInt("CHANCE_PER_DROP");
+}
+
 
 }
