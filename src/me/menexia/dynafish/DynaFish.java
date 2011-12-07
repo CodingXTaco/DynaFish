@@ -25,13 +25,15 @@ public class DynaFish extends JavaPlugin {
 	// HashSet is a command tracker.
 	ChatColor ese = ChatColor.RED;
 	
-	static int OVERALL_CHANCE = 0; // has a 1 out of this number chance of dropping nothing, if this is set to 1, it has a one in two chance of dropping.
+	static int OVERALL_CHANCE = 90; // has a 1 out of this number chance of dropping nothing, if this is set to 1, it has a one in two chance of dropping.
 	// setting this to 1 is 0 in 0 chance, thus cancelling the drops all together
 	// if 1, gives a 1 in 1 chance, ensuring the event will happen
 	// if 2, gives a 1 in 2  chance, 50%
 	
-	static int AMOUNT_TO_DROP = 0; // total amount of fish to drop
-	static int CHANCE_PER_DROP = 0; // chance per drop of fish
+	static int AMOUNT_TO_DROP = 32; // total amount of fish to drop
+	static int CHANCE_PER_DROP = 50; // chance per drop of fish
+	static boolean ENABLED_FOR_ALL = false;
+	// overrides permissions and commands check
 	// variables are mentioned for reference
 	
 @Override
@@ -57,7 +59,7 @@ public void onEnable() {
 	pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Monitor, this);
 	pm.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Monitor, this);
 	PluginDescriptionFile pdf = this.getDescription();
-	this.logger.info( "[" + pdf.getName() + "]" + " version " + pdf.getVersion() + " by MeneXia is enabled!" );
+	this.logger.info( "[DynaFish]" + " version " + pdf.getVersion() + " by MeneXia is enabled!" );
 	this.logger.info("[DynaFish] Permissions will default to op if SuperPerms is not present.");
 }
 
@@ -80,6 +82,7 @@ public boolean onCommand(CommandSender sender, Command cmd, String zhf, String[]
 			sender.sendMessage("You must be in-game to use DynaFish.");
 			return true; //return ends current code.
 			}
+	if (ENABLED_FOR_ALL == true) {return false;}
 		if(sender.hasPermission("dynafish.use")) {
 			if (zhf.equalsIgnoreCase("dynafish") || zhf.equalsIgnoreCase("df")) {
 				if (sender instanceof Player) {
@@ -94,6 +97,7 @@ public boolean onCommand(CommandSender sender, Command cmd, String zhf, String[]
 		}
 
 public void emap_asym() {
+	ENABLED_FOR_ALL = config.getBoolean("ENABLED_FOR_ALL");
 	OVERALL_CHANCE = config.getInt("OVERALL_CHANCE");
 	AMOUNT_TO_DROP = config.getInt("AMOUNT_TO_DROP");
 	CHANCE_PER_DROP = config.getInt("CHANCE_PER_DROP");
