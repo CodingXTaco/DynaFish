@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -20,26 +19,21 @@ public class DynaFish extends JavaPlugin {
 	
 	public final Logger logger = Logger.getLogger("Minecraft");
 	private final DFEntityListener entityListener = new DFEntityListener(this);
-	protected FileConfiguration config; 
 	public Set<Player> user = new HashSet<Player>();
 	// HashSet is a command tracker.
 	ChatColor ese = ChatColor.RED;
 	
-	static int OVERALL_CHANCE = 90; // has a 1 out of this number chance of dropping nothing, if this is set to 1, it has a one in two chance of dropping.
-	// setting this to 1 is 0 in 0 chance, thus cancelling the drops all together
-	// if 1, gives a 1 in 1 chance, ensuring the event will happen
-	// if 2, gives a 1 in 2  chance, 50%
-	
-	static int AMOUNT_TO_DROP = 32; // total amount of fish to drop
-	static int CHANCE_PER_DROP = 50; // chance per drop of fish
-	static boolean ENABLED_FOR_ALL = false;
+	static int OVERALL_CHANCE = 90; // chance of dropping nothing or something
+	static int AMOUNT_TO_DROP = 32; // total amount explosion can drop
+	static int CHANCE_PER_DROP = 50; // chance per one drop of fish
+	static boolean ENABLED_FOR_ALL; // ignores all commands and permissions
 	// overrides permissions and commands check
 	// variables are mentioned for reference
 	
 @Override
 public void onDisable() {
 	saveConfig();
-	this.logger.info("DynaFish disabled!");
+	this.logger.info("[DynaFish] disabled!");
 }
 
 @Override
@@ -47,10 +41,10 @@ public void onEnable() {
 	try {
 		File fileconfig = new File(getDataFolder(), "config.yml");
 		if (!fileconfig.exists()) {
-			config = getConfig();
 			getDataFolder().mkdir();
 			new File(getDataFolder(), "config.yml");
-			config.options().copyDefaults(true);
+			this.getConfig().options().copyDefaults(true);
+			saveConfig();
 		}
 	} catch (Exception e1){
 		e1.printStackTrace();
@@ -98,10 +92,10 @@ public boolean onCommand(CommandSender sender, Command cmd, String zhf, String[]
 		}
 
 public void emap_asym() {
-	ENABLED_FOR_ALL = config.getBoolean("ENABLED_FOR_ALL");
-	OVERALL_CHANCE = config.getInt("OVERALL_CHANCE");
-	AMOUNT_TO_DROP = config.getInt("AMOUNT_TO_DROP");
-	CHANCE_PER_DROP = config.getInt("CHANCE_PER_DROP");
+	ENABLED_FOR_ALL = this.getConfig().getBoolean("ENABLED_FOR_ALL");
+	OVERALL_CHANCE = this.getConfig().getInt("OVERALL_CHANCE");
+	AMOUNT_TO_DROP = this.getConfig().getInt("AMOUNT_TO_DROP");
+	CHANCE_PER_DROP = this.getConfig().getInt("CHANCE_PER_DROP");
 }
 
 
