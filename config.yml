@@ -1,15 +1,17 @@
-# DynaFish config file v1.4
-
-OVERALL_CHANCE: 90
-# When OVERALL_CHANCE is 90, there will be a 90% chance of the explosion dropping fish.
-# The other 10% will not drop fish.
-
-AMOUNT_TO_DROP: 32
-# When AMOUNT_TO_DROP is 32, the explosion can yield a total of 32 fish.
-
-CHANCE_PER_DROP: 50
-# When CHANCE_PER_DROP is 50, there will be a 50% chance that 1 fish will drop from the total amount (32).
-
-ENABLED_FOR_ALL: false
+# DynaFish config file v1.4 - check BukkitDev page for variable descriptions!
+#
 # When ENABLED_FOR_ALL is true, it will ignore all commands and permissions, making DynaFish
 # usable for all.
+#
+# When OVERALL_CHANCE is 90, there will be a 90% chance of the explosion dropping fish.
+# The other 10% will not drop fish.
+#
+# When AMOUNT_TO_DROP is 32, the explosion can yield a total of 32 fish.
+#
+# When CHANCE_PER_DROP is 50, there will be a 50% chance that 1 fish will drop from the total amount (32).
+ENABLED_FOR_ALL: false
+OVERALL_CHANCE: 90
+AMOUNT_TO_DROP: 32
+CHANCE_PER_DROP: 50
+
+
