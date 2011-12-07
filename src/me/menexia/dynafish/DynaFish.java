@@ -38,6 +38,7 @@ public class DynaFish extends JavaPlugin {
 	
 @Override
 public void onDisable() {
+	saveConfig();
 	this.logger.info("DynaFish disabled!");
 }
 
