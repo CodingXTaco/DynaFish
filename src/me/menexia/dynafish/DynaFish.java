@@ -32,7 +32,6 @@ public class DynaFish extends JavaPlugin {
 	
 @Override
 public void onDisable() {
-	saveConfig();
 	this.logger.info("[DynaFish] disabled!");
 }
 
@@ -44,7 +43,7 @@ public void onEnable() {
 			getDataFolder().mkdir();
 			new File(getDataFolder(), "config.yml");
 			this.getConfig().options().copyDefaults(true);
-			saveConfig();
+			this.saveConfig();
 		}
 	} catch (Exception e1){
 		e1.printStackTrace();
