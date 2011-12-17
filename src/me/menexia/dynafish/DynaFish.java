@@ -23,10 +23,7 @@ public class DynaFish extends JavaPlugin {
 	// HashSet is a command tracker.
 	ChatColor ese = ChatColor.RED;
 	
-	static int OVERALL_CHANCE = 90; // chance of dropping nothing or something
-	static int AMOUNT_TO_DROP = 32; // total amount explosion can drop
-	static int CHANCE_PER_DROP = 50; // chance per one drop of fish
-	static boolean ENABLED_FOR_ALL; // ignores all commands and permissions
+	boolean ENABLED_FOR_ALL = false; // ignores all commands and permissions
 	// overrides permissions and commands check
 	// variables are mentioned for reference
 	
@@ -92,9 +89,6 @@ public boolean onCommand(CommandSender sender, Command cmd, String zhf, String[]
 
 public void emap_asym() {
 	ENABLED_FOR_ALL = this.getConfig().getBoolean("ENABLED_FOR_ALL");
-	OVERALL_CHANCE = this.getConfig().getInt("OVERALL_CHANCE");
-	AMOUNT_TO_DROP = this.getConfig().getInt("AMOUNT_TO_DROP");
-	CHANCE_PER_DROP = this.getConfig().getInt("CHANCE_PER_DROP");
 }
 
 
