@@ -23,8 +23,12 @@ public class DynaFish extends JavaPlugin {
 	// HashSet is a command tracker.
 	ChatColor ese = ChatColor.RED;
 	
-	boolean ENABLED_FOR_ALL = false; // ignores all commands and permissions
+	 static boolean ENABLED_FOR_ALL = true;
+	// ignores all commands and permissions
 	// overrides permissions and commands check
+	 static int OVERALL_CHANCE = 90;
+	 static int AMOUNT_TO_DROP = 32;
+	 static int CHANCE_PER_DROP = 50; 
 	// variables are mentioned for reference
 	
 @Override
@@ -48,7 +52,6 @@ public void onEnable() {
 	emap_asym();
 	PluginManager pm = this.getServer().getPluginManager();
 	pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Monitor, this);
-	pm.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Monitor, this);
 	PluginDescriptionFile pdf = this.getDescription();
 	this.logger.info( "[DynaFish]" + " version " + pdf.getVersion() + " by MeneXia is enabled!" );
 	this.logger.info("[DynaFish] Permissions will default to op if SuperPerms is not present.");
@@ -89,6 +92,9 @@ public boolean onCommand(CommandSender sender, Command cmd, String zhf, String[]
 
 public void emap_asym() {
 	ENABLED_FOR_ALL = this.getConfig().getBoolean("ENABLED_FOR_ALL");
+	OVERALL_CHANCE = this.getConfig().getInt("OVERALL_CHANCE");
+	AMOUNT_TO_DROP = this.getConfig().getInt("AMOUNT_TO_DROP");
+	CHANCE_PER_DROP = this.getConfig().getInt("CHANCE_PER_DROP"); 
 }
 
 

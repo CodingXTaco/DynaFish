@@ -1,6 +1,6 @@
 name: DynaFish
 main: me.menexia.dynafish.DynaFish
-version: 1.42
+version: 1.51
 description: Dynamite Fishing!
 commands:
     dynafish:
