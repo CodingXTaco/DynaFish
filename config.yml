@@ -1,4 +1,4 @@
-# DynaFish config file v1.51 - check BukkitDev page for variable descriptions!
+# DynaFish config file v1.52 - check BukkitDev page for variable descriptions!
 # When ENABLED_FOR_ALL is true, it will ignore all commands and permissions, making DynaFish
 # usable for all.
 # When OVERALL_CHANCE is 90, there will be a 90% chance of the explosion dropping fish.

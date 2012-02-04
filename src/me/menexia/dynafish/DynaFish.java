@@ -9,16 +9,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DynaFish extends JavaPlugin {
 	public static DynaFish plugin;
 	
 	public final Logger logger = Logger.getLogger("Minecraft");
-	private final DFEntityListener entityListener = new DFEntityListener(this);
 	public Set<Player> user = new HashSet<Player>();
 	// HashSet is a command tracker.
 	ChatColor ese = ChatColor.RED;
@@ -30,10 +27,11 @@ public class DynaFish extends JavaPlugin {
 	 static int AMOUNT_TO_DROP = 32;
 	 static int CHANCE_PER_DROP = 50; 
 	// variables are mentioned for reference
-	
+	 
 @Override
 public void onDisable() {
-	this.logger.info("[DynaFish] disabled!");
+	PluginDescriptionFile pdf = this.getDescription();
+	this.logger.info("[DynaFish]" + " version " + pdf.getVersion() + " by MeneXia successfully disabled!");
 }
 
 @Override
@@ -50,11 +48,11 @@ public void onEnable() {
 		e1.printStackTrace();
 	}
 	emap_asym();
-	PluginManager pm = this.getServer().getPluginManager();
-	pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Monitor, this);
+	//PluginManager pm = this.getServer().getPluginManager();
+	this.getServer().getPluginManager().registerEvents(new DFEntityListener(this), this);
+	//DEPRECATED: pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Monitor, this);
 	PluginDescriptionFile pdf = this.getDescription();
-	this.logger.info( "[DynaFish]" + " version " + pdf.getVersion() + " by MeneXia is enabled!" );
-	this.logger.info("[DynaFish] Permissions will default to op if SuperPerms is not present.");
+	this.logger.info("[DynaFish]" + " version " + pdf.getVersion() + " by MeneXia sucessfully enabled!");
 }
 
 public boolean hasUser(Player player) {
