@@ -19,7 +19,11 @@ public class DFEntityListener implements Listener {
 		plugin = instance;
 	}
 
+<<<<<<< HEAD
+	@EventHandler (priority = EventPriority.LOW)
+=======
 	@EventHandler (priority = EventPriority.MONITOR)
+>>>>>>> 62c6acf840611df426731f4be83bc6ccf64a7ff5
 	public void on46_Explosion(final EntityExplodeEvent event) {
 			if (event.isCancelled()) return;
 			if (DynaFish.ENABLED_FOR_ALL == true) {
